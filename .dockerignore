@@ -1,0 +1,7 @@
+db.sqlite3
+Dockerfile
+setup.cfg
+.pre-commit-config.yaml
+.vscode/
+.pytest_case/
+__pycache__

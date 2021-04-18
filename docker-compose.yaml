@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  lemon:
+    build: ./
+    volumes:
+      - ./:/home/appuser/code
+    ports:
+      - "8000:8000"

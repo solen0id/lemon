@@ -59,8 +59,7 @@ def make_trade(isin: str, side: str, quantity: int, valid_until: int) -> bool:
         "quantity": quantity,
         "valid_until": valid_until,
     }
-
-    response = requests.post("http://localhost:8000/orders/", data=order)
+    response = requests.post("http://0.0.0.0:8000/orders/", data=order)
 
     print("🤖 -> ", end="")
     pprint(response.json())
