@@ -7,7 +7,7 @@ from lemon.order.serializers import OrderSerializer
 
 
 @pytest.fixture
-def valid_order():
+def valid_order() -> dict:
     return {
         "isin": "US88160R1014",
         "limit_price": 100.99,

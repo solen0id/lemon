@@ -8,17 +8,17 @@ from lemon.order.models import Order
 
 
 @pytest.fixture
-def api_client():
+def api_client() -> APIClient:
     return APIClient()
 
 
 @pytest.fixture
-def url_orders_create():
+def url_orders_create() -> str:
     return reverse_lazy("orders-create")
 
 
 @pytest.fixture
-def valid_order():
+def valid_order() -> dict:
     return {
         "isin": "US88160R1014",
         "limit_price": 100.99,
