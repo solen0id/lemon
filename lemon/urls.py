@@ -13,8 +13,30 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import path, reverse_lazy
+from django.views.generic import RedirectView
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
 
 from lemon.order.views import OrderCreateAPIView
 
-urlpatterns = [path("orders/", OrderCreateAPIView.as_view(), name="orders-create")]
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Order API",
+        default_version="v1",
+        description=(
+            "The Order API allows users to create trading orders programmatically"
+        ),
+    ),
+    public=True,
+)
+
+urlpatterns = [
+    path("", RedirectView.as_view(url=reverse_lazy("schema-swagger-ui"))),
+    path("orders/", OrderCreateAPIView.as_view(), name="orders-create"),
+    path(
+        r"swagger/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+]
