@@ -39,7 +39,7 @@ make app
 With the `/orders/` endpoint up and running, make a request to http://localhost:8000/orders/
 using your client of choice. Below are two samples for curl and requests (python). For more
 details on the endpoint and the expected request payload structure, see
-[Running the OpenAPI/Swagger view](#running-the-openAPI/Swagger-view).
+[Running the OpenAPI/Swagger view](#running-the-openAPI/Redoc-view).
 
 ```
 # curl
@@ -98,12 +98,12 @@ make app
 make demo
 ```
 
-### Running the OpenAPI/Swagger view
+### Running the OpenAPI/Redoc Schema View
 
-To check out the OpenAPI/Swagger Endpoint docs, run:
+To check out the OpenAPI/Redoc Endpoint documentation, run:
 
 ```
-make swagger
+make schema
 ```
 
 and go to http://localhost:8000

@@ -2,6 +2,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from rest_framework import serializers
+from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED
 
 from lemon.order.models import SIDES, Order
 
@@ -10,6 +11,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = "__all__"
+        error_status_codes = {HTTP_405_METHOD_NOT_ALLOWED: "Bad Request"}
 
     isin = serializers.RegexField(
         regex=r"^[a-zA-Z]{2}[a-zA-Z0-9]{9}\d{1}$",

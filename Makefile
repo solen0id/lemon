@@ -11,7 +11,7 @@ test:
 app:
 	gunicorn --env DJANGO_SETTINGS_MODULE=lemon.settings lemon.wsgi --bind 0.0.0.0:8000 --workers 2
 
-swagger:
+schema:
 	python lemon/manage.py runserver
 
 demo:
