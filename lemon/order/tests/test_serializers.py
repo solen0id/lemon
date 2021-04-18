@@ -9,7 +9,7 @@ from lemon.order.serializers import OrderSerializer
 @pytest.fixture
 def valid_order():
     return {
-        "isin": "DE1234ABCDE0",
+        "isin": "US88160R1014",
         "limit_price": 100.99,
         "quantity": 1,
         "side": "buy",
