@@ -2,37 +2,38 @@
 
 
 install:
-	pip install -r requirements.txt
-	python lemon/manage.py migrate
+	@pip install -r requirements.txt
+	@python lemon/manage.py migrate
 
 test:
-	pytest -ra
+	@pytest -ra lemon/
 
 app:
-	gunicorn --env DJANGO_SETTINGS_MODULE=lemon.settings lemon.wsgi --bind 0.0.0.0:8000 --workers 2
+	@gunicorn --chdir lemon/ --env DJANGO_SETTINGS_MODULE=settings wsgi --bind 0.0.0.0:8000 --workers 2
 
 schema:
-	python lemon/manage.py runserver
+	@python lemon/manage.py runserver
 
 demo:
-	python3 demo.py
+	@python3 demo.py
 
 docker-build:
-	docker-compose build
+	@docker-compose build
 
 docker-clean:
-	docker-compose down
+	@docker-compose down
 
 docker-test:
-	docker-compose run lemon bash -c "python3 -m pytest"
+	@docker-compose run lemon bash -c "python3 -m pytest lemon/"
 
 docker-app:
-	docker-compose up
+	@docker-compose up
 
 docker-schema:
-	docker-compose run -p 8000:8000 lemon bash -c "lemon/manage.py runserver 0.0.0.0:8000"
+	@docker-compose run -p 8000:8000 lemon bash -c "lemon/manage.py runserver 0.0.0.0:8000"
 
 docker-demo:
-	docker-compose up -d
-	sleep 5
-	python3 demo.py
+	@docker-compose up -d
+	@echo "Starting demo..."
+	@sleep 5
+	@python3 demo.py

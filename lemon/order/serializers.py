@@ -2,17 +2,16 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Optional, Union
 
+from order.models import SIDES, Order
 from rest_framework import serializers
 from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED
-
-from lemon.order.models import SIDES, Order
 
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = "__all__"
-        error_status_codes = {HTTP_405_METHOD_NOT_ALLOWED: "Bad Request"}
+        swagger_schema_fields = {"isin": "ISIN12345"}
 
     isin = serializers.RegexField(
         regex=r"^[a-zA-Z]{2}[a-zA-Z0-9]{9}\d{1}$",
@@ -27,7 +26,11 @@ class OrderSerializer(serializers.ModelSerializer):
         max_digits=19,
         decimal_places=2,
     )
-    quantity = serializers.IntegerField(required=True)
+    quantity = serializers.IntegerField(
+        required=True,
+        min_value=1,
+        error_messages={"min_value": 'The value of "quantity" must be greater than 0.'},
+    )
     side = serializers.CharField(required=True)
     valid_until = serializers.IntegerField(required=True)
 
@@ -35,13 +38,6 @@ class OrderSerializer(serializers.ModelSerializer):
         if value is not None and Decimal(value) <= Decimal("0.00"):
             raise serializers.ValidationError(
                 'The value of "limit_price" must be greater than 0.'
-            )
-        return value
-
-    def validate_quantity(self, value: int):
-        if value <= 0:
-            raise serializers.ValidationError(
-                'The value of "quantity" must be greater than 0.'
             )
         return value
 

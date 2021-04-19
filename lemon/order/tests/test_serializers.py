@@ -1,9 +1,8 @@
 import re
 
 import pytest
+from order.serializers import OrderSerializer
 from rest_framework.serializers import ValidationError as DRFValidationError
-
-from lemon.order.serializers import OrderSerializer
 
 
 @pytest.fixture
@@ -58,14 +57,17 @@ def valid_order() -> dict:
         ),
         (
             {"limit_price": -1},
-            re.escape('The value of "limit_price" must be greater than 0'),
+            re.escape('The value of "limit_price" must be greater than 0.'),
         ),
         (
             {"limit_price": 0},
-            re.escape('The value of "limit_price" must be greater than 0'),
+            re.escape('The value of "limit_price" must be greater than 0.'),
         ),
-        ({"quantity": -1}, re.escape('The value of "quantity" must be greater than 0')),
-        ({"quantity": 0}, re.escape('The value of "quantity" must be greater than 0')),
+        (
+            {"quantity": -1},
+            re.escape('The value of "quantity" must be greater than 0.'),
+        ),
+        ({"quantity": 0}, re.escape('The value of "quantity" must be greater than 0.')),
         ({"quantity": 1.5}, re.escape("A valid integer is required.")),
         (
             {"side": "loan"},
